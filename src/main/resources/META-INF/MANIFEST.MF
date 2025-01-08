@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Main-Class: com.mbc.jaspercompiler.Launcher
+Class-Path: bcprov-jdk15on-1.68.jar commons-lang3-3.4.jar jackson-databi
+ nd-2.12.2.jar javafx-base-11.0.2.jar jackson-core-2.12.2.jar castor-xml
+ -1.4.1.jar javafx-graphics-11.0.2.jar groovy-4.0.8.jar commons-collecti
+ ons4-4.2.jar jackson-annotations-2.12.2.jar jasperreports-6.18.1.jar ja
+ vafx-graphics-11.0.2-win.jar ecj-3.21.0.jar commons-digester-2.1.jar ja
+ vax.inject-1.jar javafx-fxml-11.0.2.jar javafx-base-11.0.2-win.jar java
+ fx-fxml-11.0.2-win.jar jfreechart-1.0.19.jar javafx-controls-11.0.2.jar
+  commons-beanutils-1.9.4.jar commons-logging-1.1.1.jar itext-2.1.7.js9.
+ jar castor-core-1.4.1.jar commons-collections-3.2.2.jar javafx-controls
+ -11.0.2-win.jar jcommon-1.0.23.jar
+
