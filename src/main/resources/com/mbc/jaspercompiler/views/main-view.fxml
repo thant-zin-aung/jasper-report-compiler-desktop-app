@@ -95,7 +95,7 @@
             <Font size="10.0" />
          </font>
       </Text>
-      <Label fx:id="highPerformanceEnableLabel" layoutX="59.0" layoutY="243.0" text="Enabled" textFill="#00ff04" visible="false">
+      <Label fx:id="highPerformanceEnableLabel" layoutX="247.0" layoutY="275.0" text="Enabled" textFill="#00ff04" visible="false">
          <font>
             <Font size="10.0" />
          </font>
@@ -115,7 +115,7 @@
             <Font size="10.0" />
          </font>
       </Text>
-      <Label fx:id="recursiveEnableLabel" layoutX="249.0" layoutY="195.0" text="Enabled" textFill="#00ff04" visible="false">
+      <Label fx:id="recursiveEnableLabel" layoutX="247.0" layoutY="195.0" text="Enabled" textFill="#00ff04" visible="false">
          <font>
             <Font size="10.0" />
          </font>
@@ -125,7 +125,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <ComboBox fx:id="comboBox" layoutX="14.0" layoutY="245.0" prefHeight="35.0" prefWidth="220.0" style="-fx-border-radius: 0px; -fx-background-radius: 0px; -fx-border-width: 0px;" styleClass="label-font-combobox" />
+      <ComboBox fx:id="comboBox" layoutX="14.0" layoutY="245.0" onMouseClicked="#clickOnConvertFontComboBox" prefHeight="35.0" prefWidth="220.0" style="-fx-border-radius: 0px; -fx-background-radius: 0px; -fx-border-width: 0px;" styleClass="label-font-combobox" />
+      <Text fx:id="warningText" fill="#dbff00" layoutX="370.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[Warning]: Enter/Select remaining fields *" visible="false">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Text>
    </children>
    <effect>
       <DropShadow />

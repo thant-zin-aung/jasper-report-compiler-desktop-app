@@ -11,11 +11,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.util.Objects;
 
 public class MainController {
     @FXML
@@ -36,6 +38,8 @@ public class MainController {
     private Label recursiveEnableLabel;
     @FXML
     private ComboBox<String> comboBox;
+    @FXML
+    private Text warningText;
 
     private Label compilingLabel;
     private Label currentCompiledLabel;
@@ -62,7 +66,10 @@ public class MainController {
 
     @FXML
     public void initialize(){
-        comboBox.getItems().addAll("Element 1", "Element 2", "Element 3");
+        JasperCompilerAPI.convertFontMap.put("unicode","Unicode Font");
+        JasperCompilerAPI.convertFontMap.put("zawgyi", "Zawgyi Font");
+        comboBox.getItems().addAll(JasperCompilerAPI.convertFontMap.values());
+        comboBox.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -88,6 +95,11 @@ public class MainController {
         recursiveMode = !recursiveMode;
     }
 
+    @FXML
+    public void clickOnConvertFontComboBox() {
+//        System.out.println(comboBox.getSelectionModel().getSelectedItem());
+    }
+
     private void switchButton(Node button, Node toggle, Label enabledLabel, boolean mode) {
         if (mode) {
             toggle.setStyle("-fx-translate-x: 0px; -fx-background-radius: 0px; -fx-border-radius: 0px; -fx-background-color: white;");
@@ -102,6 +114,7 @@ public class MainController {
 
     @FXML
     public void clickOnCompileButton() {
+        if(isThereRemainingFields()) return;
         createAndShowCompileUI();
     }
 
@@ -248,7 +261,7 @@ public class MainController {
 
         root.getChildren().addAll(leftContentWrapper, rightContentWrapper);
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Main.class.getResource("css/progress-bar-style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("css/progress-bar-style.css")).toExternalForm());
         compileStage.setScene(scene);
         compileStage.initStyle(StageStyle.UNDECORATED);
         Main.makeWindowDraggable(scene, compileStage);
@@ -261,6 +274,7 @@ public class MainController {
         jasperCompilerAPI = new JasperCompilerAPI(selectedJrxmlDirectory.getAbsolutePath(),
                 compilingLabel, currentCompiledLabel, totalCompileIndexLabel, compileFilenameLabel,
                 totalCompileLabel, successCompileLabel, failCompileLabel, progressBar, percenLabel, cancelButton);
+        jasperCompilerAPI.setSelectedConvertFont(comboBox.getSelectionModel().getSelectedItem());
         jasperCompilerAPI.setFontName(fontNameTextField.getText().trim());
         jasperCompilerAPI.setHighPerformanceMode(highPerformanceMode);
         jasperCompilerAPI.setRecursiveMode(recursiveMode);
@@ -274,5 +288,13 @@ public class MainController {
     @FXML
     public void clickOnCloseButton() {
         Platform.exit();
+    }
+
+    private boolean isThereRemainingFields() {
+        if(jrxmlFilePathLabel.getText().equalsIgnoreCase("..........") || fontNameTextField.getText().isEmpty()) {
+            warningText.setVisible(true);
+            return true;
+        }
+        return false;
     }
 }

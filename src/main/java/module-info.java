@@ -2,6 +2,7 @@ module com.mbc.jaspercompiler {
     requires javafx.controls;
     requires javafx.fxml;
     requires jasperreports;
+    requires myanmar.tools;
 
 
     opens com.mbc.jaspercompiler to javafx.fxml;

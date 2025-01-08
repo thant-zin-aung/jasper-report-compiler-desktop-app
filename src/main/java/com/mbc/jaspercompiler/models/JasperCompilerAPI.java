@@ -18,6 +18,8 @@ public class JasperCompilerAPI {
     private final String COMPILE_REPORT_LOG_FILE_PATH = "C:\\ProgramData\\JasperReportCompileLogs.txt";
     private final String COMPILE_ERROR_LOG_FILE_PATH = "C:\\ProgramData\\JasperReportCompileErrors.txt";
     private final String COMPILE_FAIL_LIST_LOG_FILE_PATH = "C:\\ProgramData\\JasperReportCompileFailList.txt";
+    public static final Map<String, String> convertFontMap = new LinkedHashMap<>();
+    private String selectedConvertFont = null;
     private int totalFilesToCompile = 0;
     private int currentCompileFilesCount = 0;
     private int successCompileFilesCount = 0;
@@ -55,6 +57,10 @@ public class JasperCompilerAPI {
         this.cancelButton = cancelButton;
         recursiveJrxmlFilenameList = FXCollections.observableArrayList();
     }
+    public void setSelectedConvertFont(String selectedConvertFont) {
+        this.selectedConvertFont = selectedConvertFont;
+    }
+
     public void setRecursiveMode(boolean recursiveMode) {
         this.recursiveMode = recursiveMode;
     }
@@ -64,8 +70,8 @@ public class JasperCompilerAPI {
     }
 
     public void compileAndExportReport() {
-        File jrxmlTempChangeDirectory = new File(jrxmlFilesDirectory + "\\jrxml_temp_change");
-        jrxmlTempChangeDirectory.mkdir();
+//        File jrxmlTempChangeDirectory = new File(jrxmlFilesDirectory + "\\jrxml_temp_change");
+//        jrxmlTempChangeDirectory.mkdir();
         initialize();
         makeChangesToSourceFile(new File(jrxmlFilesDirectory));
         compileReport();
@@ -166,6 +172,13 @@ public class JasperCompilerAPI {
             while ( (readLine = bufferedReader.readLine()) != null ) {
                 if ( readLine.contains("fontName")) {
                     readLine = readLine.replaceAll("fontName=\"[^\"]*\"", "fontName=\""+fontName+"\"");
+                }
+                if (selectedConvertFont.equalsIgnoreCase(convertFontMap.get("zawgyi"))) {
+                    readLine = ZawgyiUnicodeConverter.convertToZawgyi(readLine);
+                    System.out.println("Converting to zawgyi");
+                } else if (selectedConvertFont.equalsIgnoreCase(convertFontMap.get("unicode"))) {
+                    readLine = ZawgyiUnicodeConverter.convertToUnicode(readLine);
+                    System.out.println("Converting to unicode");
                 }
                 bufferedWriter.write(readLine.concat("\n"));
             }
